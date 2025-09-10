@@ -1,35 +1,51 @@
 {
-    "name": "patient-management-frontend",
-    "version": "1.0.2",
-    "description": "Modern Patient Management System Frontend",
-    "main": "index.js",
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "dependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-scripts": "5.0.1",
-        "react-router-dom": "^6.8.1",
-        "axios": "^1.3.4",
-        "recharts": "^2.5.0",
-        "react-icons": "^4.7.1",
-        "react-toastify": "^9.1.1",
-        "date-fns": "^2.29.3"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "patient-management-system",
+  "version": "1.0.0",
+  "description": "Full-Stack Patient Management System with React Frontend and Node.js Backend",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm start",
+    "client": "npm run start:frontend",
+    "start:frontend": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:all": "npm install && cd backend && npm install",
+    "build:frontend": "react-scripts build",
+    "deploy:frontend": "npm run build:frontend",
+    "deploy:backend": "cd backend && npm start"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "react-router-dom": "^6.8.1",
+    "axios": "^1.3.4",
+    "recharts": "^2.5.0",
+    "react-icons": "^4.7.1",
+    "react-toastify": "^9.1.1",
+    "date-fns": "^2.29.3",
+    "concurrently": "^7.6.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
 }

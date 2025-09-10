@@ -1,0 +1,17 @@
+# Salesforce Integration Configuration
+# Copy this file to .env and fill in your Salesforce credentials
+
+# Salesforce Login URL (use https://test.salesforce.com for sandbox)
+SALESFORCE_LOGIN_URL=https://login.salesforce.com
+
+# Your Salesforce username
+SALESFORCE_USERNAME=your_username@example.com
+
+# Your Salesforce password
+SALESFORCE_PASSWORD=your_password
+
+# Your Salesforce security token (get this from Salesforce setup)
+SALESFORCE_SECURITY_TOKEN=your_security_token
+
+# Optional: Custom object API name (default: Referral__c)
+SALESFORCE_REFERRAL_OBJECT=Referral__c
