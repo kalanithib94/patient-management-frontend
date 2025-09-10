@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Referral - ReferralFlow Connect</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    
+    <meta name="version" content="1.0.0">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-eye me-2"></i>ReferralFlow Connect
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="new-referral.html">New Referral</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="referrals.html">All Referrals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">Analytics</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <span class="navbar-text">Demo User</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mt-4">
+        <!-- Alert Messages -->
+        <div id="alert-container"></div>
+        
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h3 mb-1">
+                            <i class="bi bi-plus-circle text-primary me-2"></i>New Referral
+                        </h1>
+                        <p class="text-muted mb-0">Submit a new patient referral to the clinic</p>
+                    </div>
+                    <div>
+                        <a href="index.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Referral Form -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="mb-0">
+                            <i class="bi bi-file-earmark-text text-primary me-2"></i>
+                            Patient Referral Form
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="referral-form" novalidate>
+                            <!-- Practice Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="bi bi-building me-2"></i>Practice Information
+                                    </h6>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="optician-select" class="form-label">Referring Practice <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="optician-select" name="optician_id" required>
+                                        <option value="">Select your practice...</option>
+                                        <option value="1">Specsavers Birmingham</option>
+                                        <option value="2">Vision Express Manchester</option>
+                                        <option value="3">Independent Opticians Ltd</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select your practice.</div>
+                                </div>
+                            </div>
+
+                            <!-- Patient Demographics -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="bi bi-person me-2"></i>Patient Demographics
+                                    </h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="patient-name" class="form-label">Patient Full Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="patient-name" name="patient_name" 
+                                           placeholder="Enter patient's full name" maxlength="255" required>
+                                    <div class="invalid-feedback">Please enter the patient's name.</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="patient-dob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="patient-dob" name="patient_dob">
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label for="patient-nhs" class="form-label">NHS Number</label>
+                                    <input type="text" class="form-control" id="patient-nhs" name="patient_nhs_number" 
+                                           placeholder="1234567890" maxlength="10" pattern="[0-9]{10}">
+                                    <div class="form-text">10-digit NHS number (optional)</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="patient-phone" class="form-label">Contact Phone</label>
+                                    <input type="tel" class="form-control" id="patient-phone" name="patient_phone" 
+                                           placeholder="01234 567890">
+                                </div>
+                            </div>
+
+                            <!-- Patient Address -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="bi bi-geo-alt me-2"></i>Patient Address
+                                    </h6>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="patient-address1" class="form-label">Address Line 1</label>
+                                    <input type="text" class="form-control" id="patient-address1" name="patient_address_line1" 
+                                           placeholder="House number and street">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="patient-city" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="patient-city" name="patient_city" 
+                                           placeholder="City">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="patient-postcode" class="form-label">Postcode</label>
+                                    <input type="text" class="form-control" id="patient-postcode" name="patient_postcode" 
+                                           placeholder="B1 1AA" style="text-transform: uppercase;">
+                                </div>
+                            </div>
+
+                            <!-- Clinical Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="bi bi-heart-pulse me-2"></i>Clinical Information
+                                    </h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="condition" class="form-label">Primary Condition <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="condition" name="condition" required>
+                                        <option value="">Select condition...</option>
+                                        <option value="cataract">Cataract</option>
+                                        <option value="amd">Age-related Macular Degeneration (AMD)</option>
+                                        <option value="oculoplastics">Oculoplastics</option>
+                                        <option value="vitreoretinal">Vitreoretinal</option>
+                                        <option value="glaucoma">Glaucoma</option>
+                                        <option value="diabetic_retinopathy">Diabetic Retinopathy</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select the primary condition.</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="urgency" class="form-label">Urgency Level <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="urgency" name="urgency" required>
+                                        <option value="routine">Routine</option>
+                                        <option value="urgent">Urgent</option>
+                                        <option value="emergency">Emergency</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Clinical Notes -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label for="clinical-notes" class="form-label">Clinical Notes <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="clinical-notes" name="clinical_notes" rows="4" 
+                                              placeholder="Please provide detailed clinical observations, symptoms, and relevant history..." 
+                                              maxlength="2000" required></textarea>
+                                    <div class="form-text">
+                                        <span id="notes-counter">0</span>/2000 characters
+                                    </div>
+                                    <div class="invalid-feedback">Please provide clinical notes.</div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <h6 class="text-primary mb-3">
+                                        <i class="bi bi-info-circle me-2"></i>Additional Information
+                                    </h6>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="previous-treatment" class="form-label">Previous Treatment</label>
+                                    <textarea class="form-control" id="previous-treatment" name="previous_treatment" rows="3" 
+                                              placeholder="Any previous treatments or interventions..."></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="medications" class="form-label">Current Medications</label>
+                                    <textarea class="form-control" id="medications" name="medications" rows="3" 
+                                              placeholder="List current medications..."></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="allergies" class="form-label">Known Allergies</label>
+                                    <textarea class="form-control" id="allergies" name="allergies" rows="2" 
+                                              placeholder="List any known allergies..."></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="special-requirements" class="form-label">Special Requirements</label>
+                                    <textarea class="form-control" id="special-requirements" name="special_requirements" rows="2" 
+                                              placeholder="Accessibility needs, language requirements, etc..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Consent and Submission -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="border-top pt-4">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
+                                            <label class="form-check-label" for="consent">
+                                                I confirm that I have obtained patient consent for this referral and that all information provided is accurate. <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="invalid-feedback">You must confirm patient consent.</div>
+                                        </div>
+                                        
+                                        <div class="form-check mb-4">
+                                            <input class="form-check-input" type="checkbox" id="gdpr" name="gdpr" required>
+                                            <label class="form-check-label" for="gdpr">
+                                                I confirm compliance with GDPR and data protection requirements. <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="invalid-feedback">You must confirm GDPR compliance.</div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                                                <i class="bi bi-arrow-clockwise me-1"></i>Reset Form
+                                            </button>
+                                            
+                                            <div>
+                                                <button type="button" class="btn btn-outline-primary me-2" onclick="saveAsDraft()">
+                                                    <i class="bi bi-save me-1"></i>Save as Draft
+                                                </button>
+                                                <button type="submit" class="btn btn-primary" id="submit-btn">
+                                                    <span id="submit-text">
+                                                        <i class="bi bi-send me-1"></i>Submit Referral
+                                                    </span>
+                                                    <span id="submit-loading" style="display: none;">
+                                                        <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                                        Submitting...
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-3 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">ReferralFlow Connect - Eye-Docs KTP Demo</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="badge bg-primary">v1.0.0</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-check-circle me-2"></i>Referral Submitted
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Referral Submitted Successfully!</h4>
+                        <p class="text-muted">Your referral has been submitted and will be reviewed by the clinical team.</p>
+                        <div class="alert alert-info">
+                            <strong>Referral Number:</strong> <span id="referral-number"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='new-referral.html'">
+                        Submit Another
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">
+                        Back to Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Configuration -->
+    <script src="../assets/js/config.js"></script>
+    <!-- Main App -->
+    <script src="../assets/js/main.js"></script>
+    <!-- Referral Form -->
+    <script src="../assets/js/referral-form.js"></script>
+</body>
+</html>

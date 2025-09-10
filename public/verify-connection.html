@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Backend Connection</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .status-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+        .loading {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+        .url {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .data-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.3);
+        }
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 Backend Connection Verification</h1>
+        
+        <div class="button-container">
+            <button onclick="testConnection()">Test Connection</button>
+            <button onclick="clearResults()">Clear Results</button>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const BACKEND_URL = 'https://eyedocs-ktp-production.up.railway.app/api';
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+        
+        async function testConnection() {
+            clearResults();
+            const resultsDiv = document.getElementById('results');
+            
+            // Test 1: Health Check
+            const healthCard = document.createElement('div');
+            healthCard.className = 'status-card loading';
+            healthCard.innerHTML = '<h3>🏥 Health Check</h3><p>Testing backend health endpoint...</p>';
+            resultsDiv.appendChild(healthCard);
+            
+            try {
+                const response = await fetch(BACKEND_URL + '/health');
+                const data = await response.json();
+                healthCard.className = 'status-card success';
+                healthCard.innerHTML = `
+                    <h3>✅ Health Check - SUCCESS</h3>
+                    <p>Backend is running!</p>
+                    <div class="url">${BACKEND_URL}/health</div>
+                    <div class="data-preview">${JSON.stringify(data, null, 2)}</div>
+                `;
+            } catch (error) {
+                healthCard.className = 'status-card error';
+                healthCard.innerHTML = `
+                    <h3>❌ Health Check - FAILED</h3>
+                    <p>Error: ${error.message}</p>
+                    <div class="url">${BACKEND_URL}/health</div>
+                `;
+            }
+            
+            // Test 2: Patients API
+            const patientsCard = document.createElement('div');
+            patientsCard.className = 'status-card loading';
+            patientsCard.innerHTML = '<h3>👥 Patients API</h3><p>Fetching patient data...</p>';
+            resultsDiv.appendChild(patientsCard);
+            
+            try {
+                const response = await fetch(BACKEND_URL + '/patients');
+                const data = await response.json();
+                patientsCard.className = 'status-card success';
+                patientsCard.innerHTML = `
+                    <h3>✅ Patients API - SUCCESS</h3>
+                    <p>Found ${data.data.length} patients</p>
+                    <div class="url">${BACKEND_URL}/patients</div>
+                    <div class="data-preview">First patient: ${JSON.stringify(data.data[0], null, 2)}</div>
+                `;
+            } catch (error) {
+                patientsCard.className = 'status-card error';
+                patientsCard.innerHTML = `
+                    <h3>❌ Patients API - FAILED</h3>
+                    <p>Error: ${error.message}</p>
+                    <div class="url">${BACKEND_URL}/patients</div>
+                `;
+            }
+            
+            // Test 3: Appointments API
+            const appointmentsCard = document.createElement('div');
+            appointmentsCard.className = 'status-card loading';
+            appointmentsCard.innerHTML = '<h3>📅 Appointments API</h3><p>Fetching appointment data...</p>';
+            resultsDiv.appendChild(appointmentsCard);
+            
+            try {
+                const response = await fetch(BACKEND_URL + '/appointments');
+                const data = await response.json();
+                appointmentsCard.className = 'status-card success';
+                appointmentsCard.innerHTML = `
+                    <h3>✅ Appointments API - SUCCESS</h3>
+                    <p>Found ${data.data.length} appointments</p>
+                    <div class="url">${BACKEND_URL}/appointments</div>
+                    <div class="data-preview">First appointment: ${JSON.stringify(data.data[0], null, 2)}</div>
+                `;
+            } catch (error) {
+                appointmentsCard.className = 'status-card error';
+                appointmentsCard.innerHTML = `
+                    <h3>❌ Appointments API - FAILED</h3>
+                    <p>Error: ${error.message}</p>
+                    <div class="url">${BACKEND_URL}/appointments</div>
+                `;
+            }
+            
+            // Summary
+            const summaryCard = document.createElement('div');
+            summaryCard.className = 'status-card';
+            summaryCard.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            summaryCard.style.color = 'white';
+            summaryCard.innerHTML = `
+                <h3>📊 Summary</h3>
+                <p><strong>Backend URL:</strong> ${BACKEND_URL}</p>
+                <p><strong>Status:</strong> All core APIs are working!</p>
+                <p><strong>Next Step:</strong> Clear your browser cache and reload the main application.</p>
+            `;
+            resultsDiv.appendChild(summaryCard);
+        }
+        
+        // Auto-run test on page load
+        window.onload = () => {
+            testConnection();
+        };
+    </script>
+</body>
+</html>

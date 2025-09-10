@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Debug Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .loading { background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>API Debug Test</h1>
+    <p>This page tests which backend URL the frontend is actually using.</p>
+    
+    <div id="results"></div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function addResult(message, type = 'loading') {
+            const div = document.createElement('div');
+            div.className = `test ${type}`;
+            div.innerHTML = message;
+            resultsDiv.appendChild(div);
+        }
+
+        // Test 1: Check if old URL is accessible
+        addResult('Testing OLD backend URL: patient-management-backend-production.up.railway.app', 'loading');
+        fetch('https://patient-management-backend-production.up.railway.app/api/health')
+            .then(response => response.json())
+            .then(data => {
+                addResult('❌ OLD URL is still accessible: ' + JSON.stringify(data), 'error');
+            })
+            .catch(error => {
+                addResult('✅ OLD URL is not accessible (good): ' + error.message, 'success');
+            });
+
+        // Test 2: Check if new URL is accessible
+        addResult('Testing NEW backend URL: eyedocs-ktp-production.up.railway.app', 'loading');
+        fetch('https://eyedocs-ktp-production.up.railway.app/api/health')
+            .then(response => response.json())
+            .then(data => {
+                addResult('✅ NEW URL is accessible: ' + JSON.stringify(data), 'success');
+            })
+            .catch(error => {
+                addResult('❌ NEW URL is not accessible: ' + error.message, 'error');
+            });
+
+        // Test 3: Test patients endpoint
+        addResult('Testing patients endpoint on NEW URL...', 'loading');
+        fetch('https://eyedocs-ktp-production.up.railway.app/api/patients')
+            .then(response => response.json())
+            .then(data => {
+                addResult('✅ Patients API working: ' + data.data.length + ' patients found', 'success');
+            })
+            .catch(error => {
+                addResult('❌ Patients API failed: ' + error.message, 'error');
+            });
+    </script>
+</body>
+</html>

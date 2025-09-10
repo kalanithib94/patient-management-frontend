@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API URL Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>API URL Test</h1>
+    <p>This page tests which API URL the frontend is actually using.</p>
+    
+    <div id="results"></div>
+
+    <script>
+        // Test what URL the frontend is actually calling
+        console.log('Testing API URLs...');
+        
+        // Test the old URL that was causing issues
+        fetch('https://patient-management-backend-production.up.railway.app/api/health')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test error">❌ OLD URL is accessible: ' + JSON.stringify(data) + '</div>';
+            })
+            .catch(error => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test success">✅ OLD URL is not accessible (good): ' + error.message + '</div>';
+            });
+
+        // Test the correct URL
+        fetch('https://eyedocs-ktp-production.up.railway.app/api/health')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test success">✅ NEW URL is accessible: ' + JSON.stringify(data) + '</div>';
+            })
+            .catch(error => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test error">❌ NEW URL is not accessible: ' + error.message + '</div>';
+            });
+
+        // Test patients endpoint
+        fetch('https://eyedocs-ktp-production.up.railway.app/api/patients')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test success">✅ Patients API working: ' + data.data.length + ' patients found</div>';
+            })
+            .catch(error => {
+                document.getElementById('results').innerHTML += 
+                    '<div class="test error">❌ Patients API failed: ' + error.message + '</div>';
+            });
+    </script>
+</body>
+</html>
